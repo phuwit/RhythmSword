@@ -43,6 +43,9 @@ public class RayInteractor : MonoBehaviour
             particleInstance.transform.position = hitObject.transform.position;
 
             lastCollided = hitObject;
+        } else
+        {
+            lastCollided = null;
         }
     }
 }
