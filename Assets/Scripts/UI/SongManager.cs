@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
 
+
+
 [System.Serializable]
 public class DifficultyBeatmap
 {
@@ -28,10 +30,11 @@ public class SongInfo
     public DifficultyBeatmapSet[] _difficultyBeatmapSets;
 }
 
-public class SongLoader : MonoBehaviour
+public class SongManager : MonoBehaviour
 {
     public Transform songListParent;   // ต้องเป็น Content
     public GameObject songItemPrefab;
+
 
     void Start()
     {

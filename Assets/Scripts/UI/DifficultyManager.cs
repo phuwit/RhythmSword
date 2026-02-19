@@ -11,6 +11,11 @@ public class DifficultyManager : MonoBehaviour
     public GameObject difficultyPanel;
     public Transform difficultyButtonParent;
     public GameObject difficultyButtonPrefab;
+    public GameObject playButton;
+    public SongManager songManager;
+
+    private SongInfo currentSong;
+
 
     private List<DifficultyButtonUI> buttons = new List<DifficultyButtonUI>();
     private DifficultyButtonUI currentSelected;
@@ -18,7 +23,6 @@ public class DifficultyManager : MonoBehaviour
     private string selectedSongPath;
     private string selectedDifficulty;
 
-    public GameObject startButton;
 
     int GetDifficultyRank(string diff)
     {
@@ -39,12 +43,17 @@ public class DifficultyManager : MonoBehaviour
     {
         Instance = this;
         difficultyPanel.SetActive(false);
+        playButton.SetActive(false);
     }
 
     public void ShowDifficulties(SongInfo song, string path)
     {
         difficultyPanel.SetActive(true);
+        playButton.SetActive(true);
+
+        currentSong = song;
         selectedSongPath = path;
+        // selectedDifficulty = null;
 
         foreach (Transform child in difficultyButtonParent)
         {
@@ -102,16 +111,22 @@ public class DifficultyManager : MonoBehaviour
             btn.SetSelected(btn == selected);
         }
 
-        Debug.Log("Selected Difficulty: " + selectedDifficulty);
     }
 
-    public void OnStartButton()
+    public void OnPlayButton()
     {
-        Debug.Log("Start Pressed");
+        Debug.Log("=== PLAY BUTTON ===");
 
-        if (string.IsNullOrEmpty(selectedSongPath))
+        if (currentSong != null)
         {
-            Debug.Log("No song selected");
+            Debug.Log("Song: " + currentSong._songName +
+                    " | Difficulty: " + selectedDifficulty);
+        }
+
+        if (string.IsNullOrEmpty(selectedSongPath) ||
+            string.IsNullOrEmpty(selectedDifficulty))
+        {
+            Debug.Log("Song or Difficulty not selected");
             return;
         }
 
@@ -120,6 +135,7 @@ public class DifficultyManager : MonoBehaviour
 
         SceneManager.LoadScene("GameplayScene");
     }
+
 
 
 }
