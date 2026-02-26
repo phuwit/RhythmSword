@@ -27,7 +27,7 @@ public class NoteSpawner : MonoBehaviour {
     private readonly List<Note> notes = new();
     private int currentNoteIndex = 0;
 
-    private readonly List<GameObject> noteInstances = new();
+    private readonly HashSet<GameObject> noteInstances = new();
 
     private readonly NoteLineIndex[] noteLineIndexLookup = { NoteLineIndex.LeftMost, NoteLineIndex.CenterLeft, NoteLineIndex.CenterRight, NoteLineIndex.RightMost };
     private readonly NoteLineLayer[] noteLineLayerLookup = { NoteLineLayer.Bottom, NoteLineLayer.Center, NoteLineLayer.Top };
@@ -221,7 +221,7 @@ public class NoteSpawner : MonoBehaviour {
                 currentNoteIndex++;
             }
 
-            List<GameObject> expiredNoteInstances = new();
+            HashSet<GameObject> expiredNoteInstances = new();
 
             foreach (GameObject noteInstance in noteInstances) {
                 ColorNote colorNote = noteInstance.GetComponent<ColorNote>();
