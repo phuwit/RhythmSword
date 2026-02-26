@@ -1,8 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameState", menuName = "Scriptable Objects/GameState")]
-public class GlobalData : ScriptableObject
-{
-    public string mapName;
-    public string mapPath;
+public class GameState : ScriptableObject {
+    public string mapDirName;
+    public string difficulty;
 }

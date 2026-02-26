@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920e6ecb42156f74a8672631d3d81ae5, type: 3}
   m_Name: GameState
   m_EditorClassIdentifier: Assembly-CSharp::GlobalData
-  mapName: 
-  mapPath: 
+  mapDirName: "30560 (Crab Rave - Ph\xF8enix)"
+  difficulty: Expert
