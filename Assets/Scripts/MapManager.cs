@@ -14,6 +14,7 @@ public class NoteSpawner : MonoBehaviour {
     [SerializeField] private float audioDelay;  // Positive is audio lagging behind
     [SerializeField] private float noteXOffset;
     [SerializeField] private float noteYOffset;
+    [SerializeField] private float noteZOffset;
     public GameObject notePrefab;
     public Material noteArrowMaterial;
     public Material noteDotMaterial;
@@ -186,9 +187,14 @@ public class NoteSpawner : MonoBehaviour {
         StartCoroutine(StartMusic());
     }
 
-    IEnumerator StartMusic() {
+    private IEnumerator StartMusic() {
         yield return new WaitForSeconds(1f);
         audioSource.Play();
+    }
+
+    public void DestroyNoteInstance(GameObject noteInstance) {
+        noteInstances.Remove(noteInstance);
+        Destroy(noteInstance);
     }
 
     void Update() {
@@ -198,7 +204,7 @@ public class NoteSpawner : MonoBehaviour {
 
             while (currentNoteIndex < notes.Count && notes[currentNoteIndex].beat + noteHalfJumpDuration < currentBeat) {
                 Note note = notes[currentNoteIndex];
-                Vector3 position = new(noteXPositionLookup[note.lineIndex] + noteXOffset, noteYPositionLookup[note.lineLayer] + noteYOffset, noteJumpDistance);
+                Vector3 position = new(noteXPositionLookup[note.lineIndex] + noteXOffset, noteYPositionLookup[note.lineLayer] + noteYOffset, noteJumpDistance + noteZOffset);
                 Quaternion rotation = Quaternion.Euler(0f, 0f, noteRotationLookup[note.cutDirection] + note.angleOffset);
                 GameObject noteInstance = Instantiate(notePrefab, position, rotation);
                 noteInstances.Add(noteInstance);
@@ -237,14 +243,13 @@ public class NoteSpawner : MonoBehaviour {
                 }
 
                 Vector3 position = noteInstance.transform.position;
-                position.z = distance;
+                position.z = distance + noteZOffset;
                 noteInstance.transform.position = position;
             }
 
             // TODO: Reuse instances instead of destroying and recreating them
             foreach (GameObject noteInstance in expiredNoteInstances) {
-                noteInstances.Remove(noteInstance);
-                Destroy(noteInstance);
+                DestroyNoteInstance(noteInstance);
             }
         }
 
