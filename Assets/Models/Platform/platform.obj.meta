@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 00937f46b8228544b830c768315d389d
+guid: 73312206b96c17a46a94752bff87ea85
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: oak_planks
-    second: {fileID: 2100000, guid: 15b74bf527da9a546b2dd23426286fbc, type: 2}
+    second: {fileID: 2100000, guid: d69388ce1a1a9b144acc991639aa7643, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
