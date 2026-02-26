@@ -203,6 +203,7 @@ public class NoteSpawner : MonoBehaviour {
                 GameObject noteInstance = Instantiate(notePrefab, position, rotation);
                 noteInstances.Add(noteInstance);
 
+                // TODO: Cache component to improve performance
                 Renderer renderer = noteInstance.GetComponent<Renderer>();
                 if (note.cutDirection == NoteCutDirection.Any) {
                     renderer.material = noteDotMaterial;
@@ -211,6 +212,7 @@ public class NoteSpawner : MonoBehaviour {
                     renderer.material = noteArrowMaterial;
                 }
 
+                // TODO: Cache component to improve performance
                 ColorNote colorNote = noteInstance.GetComponent<ColorNote>();
                 colorNote.beat = note.beat;
                 colorNote.lineIndex = note.lineIndex;
@@ -224,6 +226,7 @@ public class NoteSpawner : MonoBehaviour {
             HashSet<GameObject> expiredNoteInstances = new();
 
             foreach (GameObject noteInstance in noteInstances) {
+                // TODO: Cache component to improve performance
                 ColorNote colorNote = noteInstance.GetComponent<ColorNote>();
                 float beat = colorNote.beat;
                 float beatDelta = currentBeat - beat;
