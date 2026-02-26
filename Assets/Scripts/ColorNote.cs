@@ -1,28 +1,24 @@
 using UnityEngine;
 
-public enum NoteLineIndex
-{
+public enum NoteLineIndex {
     LeftMost,
     CenterLeft,
     CenterRight,
     RightMost,
 }
 
-public enum NoteLineLayer
-{
+public enum NoteLineLayer {
     Bottom,
     Center,
     Top,
 }
 
-public enum NoteColor
-{
+public enum NoteColor {
     Left,
     Right,
 }
 
-public enum NoteCutDirection 
-{
+public enum NoteCutDirection {
     Up,
     Down,
     Left,
@@ -34,27 +30,20 @@ public enum NoteCutDirection
     Any,
 }
 
-public class ColorNote : MonoBehaviour
-{
-    [SerializeField]
-    private float beat;
-    [SerializeField]
-    private NoteLineIndex lineIndex;
-    [SerializeField]
-    private NoteLineLayer lineLayer;
-    [SerializeField]
-    private NoteColor color;
-    [SerializeField]
-    private NoteCutDirection cutDirection;
+public class ColorNote : MonoBehaviour {
+    public float beat;
+    public NoteLineIndex lineIndex;
+    public NoteLineLayer lineLayer;
+    public NoteColor color;
+    public NoteCutDirection cutDirection;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+    void Start() {
+
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 }

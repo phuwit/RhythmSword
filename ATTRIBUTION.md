@@ -1,8 +1,5 @@
-
-
-|Item|Type|License|Author|
-|-|-|-|-|
-|[Minecraft Slime](https://sketchfab.com/3d-models/minecraft-slime-2caaa14e52da4693a60889b189c445a5)|3D Model and Texture|[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)|[Vincent Yanez](https://sketchfab.com/vinceyanez)|
-
-
-
+| Item                                                                                                                                                                       | Type                 | License                                                                         | Author                                            |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [Minecraft Slime](https://sketchfab.com/3d-models/minecraft-slime-2caaa14e52da4693a60889b189c445a5)                                                                        | 3D Model and Texture | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)                       | [Vincent Yanez](https://sketchfab.com/vinceyanez) |
+| [SimpleJson](https://github.com/Bunny83/SimpleJSON)                                                                                                                        | Library              | [MIT License](https://opensource.org/license/mit)                               | [Bunnny83](https://github.com/Bunny83)            |
+| [HJD and NJD Algorithm](https://github.com/AllPoland/ArcViewer/blob/5afafd1bfbec00959f68e94118eb712ead704061/Assets/__Scripts/Previewer/MapControl/BeatmapManager.cs#L134) | Algorithm            | [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) | [AllPoland](https://github.com/AllPoland)         |
