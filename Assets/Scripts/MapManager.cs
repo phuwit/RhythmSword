@@ -238,12 +238,14 @@ public class NoteSpawner : MonoBehaviour {
                 noteInstance.transform.position = position;
             }
 
+            // TODO: Reuse instances instead of destroying and recreating them
             foreach (GameObject noteInstance in expiredNoteInstances) {
                 noteInstances.Remove(noteInstance);
                 Destroy(noteInstance);
             }
         }
 
+        // TODO: Make notes move even if music stopped by interpolating position
     }
 }
 
