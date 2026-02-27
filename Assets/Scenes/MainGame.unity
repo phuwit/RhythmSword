@@ -248,6 +248,10 @@ PrefabInstance:
       propertyPath: m_StaticShadowCaster
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -428330633810256555, guid: 73312206b96c17a46a94752bff87ea85, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 263c1639ea66a24459d6ef0980effca6, type: 2}
     - target: {fileID: 919132149155446097, guid: 73312206b96c17a46a94752bff87ea85, type: 3}
       propertyPath: m_Name
       value: platform
@@ -438,13 +442,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoteSpawner
   gameState: {fileID: 11400000, guid: 172fd4bb8a175b94e914ee18d00de6b8, type: 2}
+  notePrefab: {fileID: 1980170655125941982, guid: f5a506b79410a134fa0992151cc8a9cd, type: 3}
+  noteArrowMaterial: {fileID: 2100000, guid: 3447a420d6934fd488d83a74a4f6de5b, type: 2}
+  noteDotMaterial: {fileID: 2100000, guid: 8d8cd28cbfaf6f64f947a4e81b80442f, type: 2}
+  initialPoolSize: 32
   audioDelay: 0
   noteXOffset: 0
   noteYOffset: 0
   noteZOffset: 0
-  notePrefab: {fileID: 1980170655125941982, guid: f5a506b79410a134fa0992151cc8a9cd, type: 3}
-  noteArrowMaterial: {fileID: 2100000, guid: 3447a420d6934fd488d83a74a4f6de5b, type: 2}
-  noteDotMaterial: {fileID: 2100000, guid: 8d8cd28cbfaf6f64f947a4e81b80442f, type: 2}
+  halfJumpSpeedFactor: 2
 --- !u!82 &475015587
 AudioSource:
   m_ObjectHideFlags: 0
