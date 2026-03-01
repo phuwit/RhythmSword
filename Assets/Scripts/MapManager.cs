@@ -15,11 +15,11 @@ public class NoteSpawner : MonoBehaviour {
     [SerializeField] private Material noteArrowMaterial;
     [SerializeField] private Material noteDotMaterial;
     [SerializeField] private int initialPoolSize = 32;
-    [SerializeField] private float audioDelay = 0f;  // Positive is for compensating audio lagging behind
+    [SerializeField] private float audioDelay = 0.09f;  // Positive is for compensating audio lagging behind
     [SerializeField] private float noteXOffset = 0f;
     [SerializeField] private float noteYOffset = 0f;
-    [SerializeField] private float noteZOffset = 1f;
-    [SerializeField] private float halfJumpSpeedFactor = 2f;
+    [SerializeField] private float noteZOffset = 2f;
+    [SerializeField] private float halfJumpSpeedFactor = 3f;
 
     private int bpm;
     private int noteJumpSpeed;
@@ -300,12 +300,14 @@ public class NoteSpawner : MonoBehaviour {
                     distance = beatLeft / bpm * 60f * noteJumpSpeed;
                 }
 
-                if (distance < -2f) {  // 2 m. behind player, despawn
+                float zPosition = distance + noteZOffset;
+
+                if (zPosition < -2f) {  // 2 m. behind player, despawn
                     expiredNoteInstances.Add(noteInstance);
                 }
 
                 Vector3 position = noteInstance.gameObject.transform.position;
-                position.z = distance + noteZOffset;
+                position.z = zPosition;
                 noteInstance.gameObject.transform.position = position;
             }
 
