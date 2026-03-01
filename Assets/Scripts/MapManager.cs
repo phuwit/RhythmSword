@@ -7,15 +7,19 @@ using SimpleJSON;
 
 
 [RequireComponent(typeof(AudioSource))]
-public class NoteSpawner : MonoBehaviour {
+public class MapManager : MonoBehaviour {
     private AudioSource audioSource;
 
     [SerializeField] private GameState gameState;
     [SerializeField] private GameObject notePrefab;
-    [SerializeField] private Material noteArrowMaterial;
-    [SerializeField] private Material noteDotMaterial;
+    [SerializeField] private Material planeArrowMaterial;
+    [SerializeField] private Material planeDotMaterial;
+    [SerializeField] private Material outerBodyLeftMaterial;
+    [SerializeField] private Material outerBodyRightMaterial;
+    [SerializeField] private Material innerBodyLeftMaterial;
+    [SerializeField] private Material innerBodyRightMaterial;
     [SerializeField] private int initialPoolSize = 32;
-    [SerializeField] private float audioDelay = 0.09f;  // Positive is for compensating audio lagging behind
+    [SerializeField] private float audioDelay = 0.12f;  // Positive is for compensating audio lagging behind
     [SerializeField] private float noteXOffset = 0f;
     [SerializeField] private float noteYOffset = 0f;
     [SerializeField] private float noteZOffset = 2f;
@@ -78,13 +82,17 @@ public class NoteSpawner : MonoBehaviour {
 
     private void CreateNoteInstance() {
         GameObject gameObject = Instantiate(notePrefab, new Vector3(), new Quaternion());
-        Renderer renderer = gameObject.GetComponent<Renderer>();
         ColorNote script = gameObject.GetComponent<ColorNote>();
+        Renderer arrowRenderer = gameObject.transform.Find("ArrowPlane").gameObject.GetComponent<Renderer>();
+        Renderer outerBodyRenderer = gameObject.transform.Find("OuterBody").gameObject.GetComponent<Renderer>();
+        Renderer innerBodyRenderer = gameObject.transform.Find("InnerBody").gameObject.GetComponent<Renderer>();
         NoteInstance noteInstance = new() {
             gameObject = gameObject,
             note = new Note(),
             script = script,
-            renderer = renderer,
+            arrowRenderer = arrowRenderer,
+            outerBodyRenderer = outerBodyRenderer,
+            innerBodyRenderer = innerBodyRenderer,
         };
 
         gameObject.SetActive(false);
@@ -256,10 +264,18 @@ public class NoteSpawner : MonoBehaviour {
                 Quaternion rotation = Quaternion.Euler(0f, 0f, noteRotationLookup[note.cutDirection] + note.angleOffset);
                 noteInstance.gameObject.transform.SetPositionAndRotation(position, rotation);
 
-                if (note.cutDirection == NoteCutDirection.Any) {
-                    noteInstance.renderer.material = noteDotMaterial;
+                if (note.color == NoteColor.Left) {
+                    noteInstance.outerBodyRenderer.material = outerBodyLeftMaterial;
+                    noteInstance.innerBodyRenderer.material = innerBodyLeftMaterial;
                 } else {
-                    noteInstance.renderer.material = noteArrowMaterial;
+                    noteInstance.outerBodyRenderer.material = outerBodyRightMaterial;
+                    noteInstance.innerBodyRenderer.material = innerBodyRightMaterial;
+                }
+
+                if (note.cutDirection == NoteCutDirection.Any) {
+                    noteInstance.arrowRenderer.material = planeDotMaterial;
+                } else {
+                    noteInstance.arrowRenderer.material = planeArrowMaterial;
                 }
 
                 ColorNote script = noteInstance.script;
@@ -348,5 +364,7 @@ internal class NoteInstance {
     public GameObject gameObject;
     public Note note;
     public ColorNote script;
-    public Renderer renderer;
+    public Renderer outerBodyRenderer;
+    public Renderer innerBodyRenderer;
+    public Renderer arrowRenderer;
 }

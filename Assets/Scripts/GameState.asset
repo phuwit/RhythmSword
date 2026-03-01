@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GameState
   m_EditorClassIdentifier: Assembly-CSharp::GlobalData
   mapDirName: 1573 (Bad Apple - redmagi)
-  difficulty: Expert
+  difficulty: Hard
