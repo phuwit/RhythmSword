@@ -18,10 +18,11 @@ public class MapManager : MonoBehaviour {
     [SerializeField] private Material outerBodyRightMaterial;
     [SerializeField] private Material innerBodyLeftMaterial;
     [SerializeField] private Material innerBodyRightMaterial;
+    [SerializeField][Range(0f, 1.5f)] private float laneSpacing = 0.55f;
     [SerializeField] private int initialPoolSize = 32;
     [SerializeField] private float audioDelay = 0.12f;  // Positive is for compensating audio lagging behind
     [SerializeField] private float noteXOffset = 0f;
-    [SerializeField] private float noteYOffset = 0f;
+    [SerializeField] private float noteYOffset = 0.75f;
     [SerializeField] private float noteZOffset = 2f;
     [SerializeField] private float halfJumpSpeedFactor = 3f;
 
@@ -43,15 +44,15 @@ public class MapManager : MonoBehaviour {
     private readonly NoteColor[] noteColorLookup = { NoteColor.Left, NoteColor.Right };
     private readonly NoteCutDirection[] noteCutDirectionLookup = { NoteCutDirection.Up, NoteCutDirection.Down, NoteCutDirection.Left, NoteCutDirection.Right, NoteCutDirection.UpLeft, NoteCutDirection.UpRight, NoteCutDirection.DownLeft, NoteCutDirection.DownRight, NoteCutDirection.Any };
     private readonly Dictionary<NoteLineIndex, float> noteXPositionLookup = new() {
-        {NoteLineIndex.LeftMost, - 1.5f},
-        {NoteLineIndex.CenterLeft, - 0.5f},
-        {NoteLineIndex.CenterRight, 0.5f},
-        {NoteLineIndex.RightMost, 1.5f},
+        {NoteLineIndex.LeftMost, - 0.75f},
+        {NoteLineIndex.CenterLeft, - 0.25f},
+        {NoteLineIndex.CenterRight, 0.25f},
+        {NoteLineIndex.RightMost, 0.75f},
     };
     private readonly Dictionary<NoteLineLayer, float> noteYPositionLookup = new() {
-        {NoteLineLayer.Bottom, 0.5f},
+        {NoteLineLayer.Bottom, 1f},
         {NoteLineLayer.Center, 1.5f},
-        {NoteLineLayer.Top, 2.5f},
+        {NoteLineLayer.Top, 2f},
     };
     private readonly Dictionary<NoteCutDirection, float> noteRotationLookup = new() {
         {NoteCutDirection.Down, 0f},
@@ -199,6 +200,15 @@ public class MapManager : MonoBehaviour {
         }
 
         Debug.Log($"Loaded {notes.Count} notes");  // TODO: Remove
+
+        noteXPositionLookup[NoteLineIndex.LeftMost] = laneSpacing * -1.5f;
+        noteXPositionLookup[NoteLineIndex.CenterLeft] = laneSpacing * -0.5f;
+        noteXPositionLookup[NoteLineIndex.CenterRight] = laneSpacing * 0.5f;
+        noteXPositionLookup[NoteLineIndex.RightMost] = laneSpacing * 1.5f;
+
+        noteYPositionLookup[NoteLineLayer.Bottom] = 0f;
+        noteYPositionLookup[NoteLineLayer.Center] = laneSpacing;
+        noteYPositionLookup[NoteLineLayer.Top] = laneSpacing * 2;
 
         noteHalfJumpDuration = 4f;
         while (GetJumpDistance(noteHalfJumpDuration, bpm, noteJumpSpeed) > 35.998f) {
