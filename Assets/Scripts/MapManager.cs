@@ -18,12 +18,13 @@ public class MapManager : MonoBehaviour {
     [SerializeField] private Material outerBodyRightMaterial;
     [SerializeField] private Material innerBodyLeftMaterial;
     [SerializeField] private Material innerBodyRightMaterial;
-    [SerializeField][Range(0f, 1.5f)] private float laneSpacing = 0.55f;
+    [SerializeField] private float laneWidth = 0.6f;
+    [SerializeField] private float rowHeight = 0.55f;
     [SerializeField] private int initialPoolSize = 32;
     [SerializeField] private float audioDelay = 0.12f;  // Positive is for compensating audio lagging behind
     [SerializeField] private float noteXOffset = 0f;
-    [SerializeField] private float noteYOffset = 0.75f;
-    [SerializeField] private float noteZOffset = 2f;
+    [SerializeField] private float noteYOffset = 0.6f;
+    [SerializeField] private float noteZOffset = 0.65f;
     [SerializeField] private float halfJumpSpeedFactor = 3f;
 
     private int bpm;
@@ -38,22 +39,14 @@ public class MapManager : MonoBehaviour {
 
     private readonly HashSet<NoteInstance> activeNoteInstances = new();
     private readonly Stack<NoteInstance> inactiveNoteInstances = new();
+    private readonly Dictionary<GameObject, NoteInstance> noteInstanceLookup = new();
 
     private readonly NoteLineIndex[] noteLineIndexLookup = { NoteLineIndex.LeftMost, NoteLineIndex.CenterLeft, NoteLineIndex.CenterRight, NoteLineIndex.RightMost };
     private readonly NoteLineLayer[] noteLineLayerLookup = { NoteLineLayer.Bottom, NoteLineLayer.Center, NoteLineLayer.Top };
     private readonly NoteColor[] noteColorLookup = { NoteColor.Left, NoteColor.Right };
     private readonly NoteCutDirection[] noteCutDirectionLookup = { NoteCutDirection.Up, NoteCutDirection.Down, NoteCutDirection.Left, NoteCutDirection.Right, NoteCutDirection.UpLeft, NoteCutDirection.UpRight, NoteCutDirection.DownLeft, NoteCutDirection.DownRight, NoteCutDirection.Any };
-    private readonly Dictionary<NoteLineIndex, float> noteXPositionLookup = new() {
-        {NoteLineIndex.LeftMost, - 0.75f},
-        {NoteLineIndex.CenterLeft, - 0.25f},
-        {NoteLineIndex.CenterRight, 0.25f},
-        {NoteLineIndex.RightMost, 0.75f},
-    };
-    private readonly Dictionary<NoteLineLayer, float> noteYPositionLookup = new() {
-        {NoteLineLayer.Bottom, 1f},
-        {NoteLineLayer.Center, 1.5f},
-        {NoteLineLayer.Top, 2f},
-    };
+    private readonly Dictionary<NoteLineIndex, float> noteXPositionLookup = new();
+    private readonly Dictionary<NoteLineLayer, float> noteYPositionLookup = new();
     private readonly Dictionary<NoteCutDirection, float> noteRotationLookup = new() {
         {NoteCutDirection.Down, 0f},
         {NoteCutDirection.DownRight, 45f},
@@ -99,6 +92,20 @@ public class MapManager : MonoBehaviour {
         gameObject.SetActive(false);
 
         inactiveNoteInstances.Push(noteInstance);
+        noteInstanceLookup[gameObject] = noteInstance;
+    }
+
+    public NoteInstance GetNoteInstanceFromGameObject(GameObject gameObject) {
+        return noteInstanceLookup[gameObject];
+    }
+
+    public float GetCurrentBeat() {
+        if (audioSource.isPlaying) {
+            float currentSongTime = audioSource.time - audioDelay;
+            return bpm / 60f * currentSongTime;
+        } else {
+            return 0f;
+        }
     }
 
     void Start() {
@@ -201,14 +208,14 @@ public class MapManager : MonoBehaviour {
 
         Debug.Log($"Loaded {notes.Count} notes");  // TODO: Remove
 
-        noteXPositionLookup[NoteLineIndex.LeftMost] = laneSpacing * -1.5f;
-        noteXPositionLookup[NoteLineIndex.CenterLeft] = laneSpacing * -0.5f;
-        noteXPositionLookup[NoteLineIndex.CenterRight] = laneSpacing * 0.5f;
-        noteXPositionLookup[NoteLineIndex.RightMost] = laneSpacing * 1.5f;
+        noteXPositionLookup[NoteLineIndex.LeftMost] = laneWidth * -1.5f;
+        noteXPositionLookup[NoteLineIndex.CenterLeft] = laneWidth * -0.5f;
+        noteXPositionLookup[NoteLineIndex.CenterRight] = laneWidth * 0.5f;
+        noteXPositionLookup[NoteLineIndex.RightMost] = laneWidth * 1.5f;
 
         noteYPositionLookup[NoteLineLayer.Bottom] = 0f;
-        noteYPositionLookup[NoteLineLayer.Center] = laneSpacing;
-        noteYPositionLookup[NoteLineLayer.Top] = laneSpacing * 2;
+        noteYPositionLookup[NoteLineLayer.Center] = 0.55f;
+        noteYPositionLookup[NoteLineLayer.Top] = 1.05f;
 
         noteHalfJumpDuration = 4f;
         while (GetJumpDistance(noteHalfJumpDuration, bpm, noteJumpSpeed) > 35.998f) {
@@ -248,12 +255,11 @@ public class MapManager : MonoBehaviour {
 
         NoteInstance noteInstance = inactiveNoteInstances.Pop();
         activeNoteInstances.Add(noteInstance);
-        noteInstance.gameObject.SetActive(true);
 
         return noteInstance;
     }
 
-    private void DeactivateNoteInstance(NoteInstance noteInstance) {
+    public void DeactivateNoteInstance(NoteInstance noteInstance) {
         noteInstance.gameObject.SetActive(false);
         activeNoteInstances.Remove(noteInstance);
         inactiveNoteInstances.Push(noteInstance);
@@ -264,7 +270,7 @@ public class MapManager : MonoBehaviour {
             float currentSongTime = audioSource.time - audioDelay;
             float currentBeat = bpm / 60f * currentSongTime;
 
-            while (currentNoteIndex < notes.Count && notes[currentNoteIndex].beat - 1.5f * noteHalfJumpDuration < currentBeat) {
+            while (currentNoteIndex < notes.Count && notes[currentNoteIndex].beat - (1f + (1f / halfJumpSpeedFactor)) * noteHalfJumpDuration < currentBeat) {
                 Note note = notes[currentNoteIndex++];
                 NoteInstance noteInstance = GetNoteInstance();
 
@@ -294,6 +300,8 @@ public class MapManager : MonoBehaviour {
                 script.lineLayer = note.lineLayer;
                 script.color = note.color;
                 script.cutDirection = note.cutDirection;
+
+                noteInstance.gameObject.SetActive(true);
             }
 
             HashSet<NoteInstance> expiredNoteInstances = new();
@@ -361,7 +369,7 @@ public class MapManager : MonoBehaviour {
     }
 }
 
-internal class Note {
+public class Note {
     public float beat;
     public NoteLineIndex lineIndex;
     public NoteLineLayer lineLayer;
@@ -370,7 +378,7 @@ internal class Note {
     public int angleOffset;
 }
 
-internal class NoteInstance {
+public class NoteInstance {
     public GameObject gameObject;
     public Note note;
     public ColorNote script;
