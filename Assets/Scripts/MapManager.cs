@@ -48,14 +48,14 @@ public class MapManager : MonoBehaviour {
     private readonly Dictionary<NoteLineIndex, float> noteXPositionLookup = new();
     private readonly Dictionary<NoteLineLayer, float> noteYPositionLookup = new();
     private readonly Dictionary<NoteCutDirection, float> noteRotationLookup = new() {
-        {NoteCutDirection.Down, 0f},
-        {NoteCutDirection.DownRight, 45f},
-        {NoteCutDirection.Right, 90f},
-        {NoteCutDirection.UpRight, 135f},
-        {NoteCutDirection.Up, 180f},
-        {NoteCutDirection.UpLeft, 225f},
-        {NoteCutDirection.Left, 270f},
-        {NoteCutDirection.DownLeft, 315f},
+        {NoteCutDirection.Up, 0f},
+        {NoteCutDirection.UpLeft, 45f},
+        {NoteCutDirection.Left, 90f},
+        {NoteCutDirection.DownLeft, 135f},
+        {NoteCutDirection.Down, 180f},
+        {NoteCutDirection.DownRight, 225f},
+        {NoteCutDirection.Right, 270f},
+        {NoteCutDirection.UpRight, 315f},
         {NoteCutDirection.Any, 0f},
     };
 
