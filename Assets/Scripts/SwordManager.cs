@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SwordManager : MonoBehaviour {
     [SerializeField] private MapManager mapManager;
+    [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private Transform handAnchor;
     [SerializeField] private Transform tipAnchor;
     [SerializeField] private bool isLeftSword;
@@ -31,8 +32,10 @@ public class SwordManager : MonoBehaviour {
                     NoteInstance noteInstance = mapManager.GetNoteInstanceFromGameObject(noteGameObject);
                     float currentBeat = mapManager.GetCurrentBeat();
                     Debug.Log($"Hit. timing: {currentBeat - noteInstance.note.beat} (= {currentBeat} - {noteInstance.note.beat})\nPos: ({handAnchorPosition.x}, {handAnchorPosition.y}, {handAnchorPosition.z}) - ({tipAnchorPosition.x}, {tipAnchorPosition.y}, {tipAnchorPosition.z})");
+                    bool wrongColor = !((isLeftSword && noteInstance.note.color == NoteColor.Left) || (!isLeftSword && noteInstance.note.color == NoteColor.Right));
+                    HitData hitData = new(currentBeat, true, wrongColor, false);
+                    scoreManager.RegisterHit(noteInstance.note, hitData);
                     mapManager.DeactivateNoteInstance(noteInstance);
-
                     VibrateController(0f, vibrationDuration, isLeftSword ? NoteColor.Left : NoteColor.Right);
                 }
             }

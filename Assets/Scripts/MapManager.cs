@@ -10,6 +10,7 @@ using SimpleJSON;
 public class MapManager : MonoBehaviour {
     private AudioSource audioSource;
 
+    [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private GameState gameState;
     [SerializeField] private GameObject notePrefab;
     [SerializeField] private Material planeArrowMaterial;
@@ -240,6 +241,8 @@ public class MapManager : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = songClip;
 
+        scoreManager.Init(notes.Count, bpm);
+
         StartCoroutine(StartSong());
     }
 
@@ -346,6 +349,7 @@ public class MapManager : MonoBehaviour {
             }
 
             foreach (NoteInstance noteInstance in expiredNoteInstances) {
+                scoreManager.RegisterHit(noteInstance.note, new(0, false, false, false));
                 DeactivateNoteInstance(noteInstance);
             }
         } else {
@@ -363,6 +367,7 @@ public class MapManager : MonoBehaviour {
             }
 
             foreach (NoteInstance noteInstance in expiredNoteInstances) {
+                scoreManager.RegisterHit(noteInstance.note, new(0, false, false, false));
                 DeactivateNoteInstance(noteInstance);
             }
         }
