@@ -10,6 +10,9 @@ public class SwordManager : MonoBehaviour {
     [SerializeField] private float vibrationDuration = 0.1f;
     [SerializeField] private float vibrationIntensity = 1f;
 
+    [SerializeField] private GameObject collideParticlesContainer;
+    [SerializeField] private GameObject collideParticles;
+
     private Vector3 lastHandAnchorPosition = new();
     private Vector3 lastTipAnchorPosition = new();
     private readonly Collider[] colliders = new Collider[64];
@@ -37,6 +40,9 @@ public class SwordManager : MonoBehaviour {
                     scoreManager.RegisterHit(noteInstance.note, hitData);
                     mapManager.DeactivateNoteInstance(noteInstance);
                     VibrateController(0f, vibrationDuration, isLeftSword ? NoteColor.Left : NoteColor.Right);
+                    
+                    var particleInstance = Instantiate(collideParticles, collideParticlesContainer.transform, true);
+                    particleInstance.transform.position = noteGameObject.transform.position;
                 }
             }
         }

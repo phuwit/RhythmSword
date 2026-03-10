@@ -13,6 +13,7 @@ public class MapManager : MonoBehaviour {
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private GameState gameState;
     [SerializeField] private GameObject notePrefab;
+    [SerializeField] private GameObject levelClearedHud;
     [SerializeField] private Material planeArrowMaterial;
     [SerializeField] private Material planeDotMaterial;
     [SerializeField] private Material outerBodyLeftMaterial;
@@ -369,6 +370,13 @@ public class MapManager : MonoBehaviour {
             foreach (NoteInstance noteInstance in expiredNoteInstances) {
                 scoreManager.RegisterHit(noteInstance.note, new(0, false, false, false));
                 DeactivateNoteInstance(noteInstance);
+            }
+
+            Debug.Log($"timesamples: {audioSource.timeSamples}");
+
+            if (audioSource.timeSamples != 0) {
+                //  level cleared
+                levelClearedHud.SetActive(true);
             }
         }
     }
