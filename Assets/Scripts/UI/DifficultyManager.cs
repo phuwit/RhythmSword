@@ -103,6 +103,7 @@ public class DifficultyManager : MonoBehaviour
 
     public void Select(DifficultyButtonUI selected)
     {
+        Debug.Log($"selecting {selected.label.text}");
         currentSelected = selected;
         selectedDifficulty = selected.label.text;
 
