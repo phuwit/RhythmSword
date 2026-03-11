@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 415fed18b2d4fb848951004c149486fd
+guid: 533262ddf4148b748b1ced2342ab2d5a
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -8,17 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: oak_log
-    second: {fileID: 2100000, guid: da6800afa68c8504489ad6c89ba0b9c2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: oak_log_top
-    second: {fileID: 2100000, guid: 2fe0e901933d101408b177b9e8953db6, type: 2}
+    second: {fileID: 2100000, guid: d0359c63e392d1d468459307d3f0e2b7, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: oak_planks
-    second: {fileID: 2100000, guid: 1fefe656e9882c045a42024cb0cc8bef, type: 2}
+    second: {fileID: 2100000, guid: 263c1639ea66a24459d6ef0980effca6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
