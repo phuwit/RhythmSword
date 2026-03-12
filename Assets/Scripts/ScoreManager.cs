@@ -24,8 +24,7 @@ public enum HitResult {
 }
 
 
-public class ScoreManager : MonoBehaviour
-{
+public class ScoreManager : MonoBehaviour {
     public float hitWindowPerfect = 0.050f;
     public float hitWindowOk = 0.100f;
     public float hitWindowMeh = 0.150f;
@@ -41,7 +40,7 @@ public class ScoreManager : MonoBehaviour
     public double baseScore = 0;
     public double comboPortion = 0;
     public int judgedNotes = 0;
-    
+
     private double maxComboPortion = 0;
     private int totalMapNotes = 0;
     private int bpm;
@@ -57,47 +56,39 @@ public class ScoreManager : MonoBehaviour
         { HitResult.Miss, 0 }
     };
 
-    public void Init(int totalNotesInSong, int _bpm)
-    {
+    public void Init(int totalNotesInSong, int _bpm) {
         totalMapNotes = totalNotesInSong;
         bpm = _bpm;
-        
+
         maxComboPortion = 0;
-        for (int i = 1; i <= totalNotesInSong; i++)
-        {
+        for (int i = 1; i <= totalNotesInSong; i++) {
             maxComboPortion += Mathf.Pow(i, comboPow);
         }
     }
 
-    public void RegisterHit(Note note, HitData hitData)
-    {
+    public void RegisterHit(Note note, HitData hitData) {
         judgedNotes++;
 
         HitResult result = JudgeHit(note, hitData);
-        
+
         HitStatistics[result]++;
         int baseScoreValue = (int)result;
 
-        if (result != HitResult.Miss)
-        {
+        if (result != HitResult.Miss) {
             combo++;
             highestCombo = Mathf.Max(highestCombo, combo);
-            
+
             baseScore += baseScoreValue;
             comboPortion += Mathf.Pow(combo, comboPow);
-        }
-        else
-        {
+        } else {
             combo = 0;
         }
 
         UpdateScore();
     }
 
-    private HitResult JudgeHit(Note note, HitData hit)
-    {
-        if (!hit.WasHit || hit.WrongColor || hit.WrongDirection)
-        {
+    private HitResult JudgeHit(Note note, HitData hit) {
+        if (!hit.WasHit || hit.WrongColor || hit.WrongDirection) {
             return HitResult.Miss;
         }
 
@@ -105,27 +96,49 @@ public class ScoreManager : MonoBehaviour
 
         if (absoluteOffset <= hitWindowPerfect) return HitResult.Perfect;
         if (absoluteOffset <= hitWindowOk) return HitResult.Ok;
-        if (absoluteOffset <= hitWindowMeh)  return HitResult.Meh;
+        if (absoluteOffset <= hitWindowMeh) return HitResult.Meh;
 
-        return HitResult.Miss; 
+        return HitResult.Miss;
     }
 
-    private void UpdateScore()
-    {
+    private void UpdateScore() {
         double currentMaxPossibleBaseScore = judgedNotes * (int)HitResult.Perfect;
         accuracy = currentMaxPossibleBaseScore > 0 ? baseScore / currentMaxPossibleBaseScore : 1.0;
 
         double comboProgress = maxComboPortion > 0 ? comboPortion / maxComboPortion : 1.0;
         double accuracyProgress = totalMapNotes > 0 ? (double)judgedNotes / totalMapNotes : 1.0;
 
-        double calculatedScore = 
-            (maxScore / 2f * accuracy * comboProgress) + 
+        double calculatedScore =
+            (maxScore / 2f * accuracy * comboProgress) +
             (maxScore / 2f * Math.Pow(accuracy, accuracyPow) * accuracyProgress);
 
         totalScore = (long)Math.Round(calculatedScore);
-        
+
         comboDisplay.text = $"{combo}";
         accuracyDisplay.text = $"{accuracy * 100f:f2}%";
         scoreDisplay.text = $"{calculatedScore:f0}";
     }
+
+    public long GetScore() {
+        return totalScore;
+    }
+
+    public float GetAccuracy() {
+        return (float)(accuracy * 100f);
+    }
+
+    public int GetMaxCombo() {
+        return highestCombo;
+    }
+
+    public string GetRank() {
+        float acc = GetAccuracy();
+
+        if (acc >= 95) return "S";
+        if (acc >= 90) return "A";
+        if (acc >= 80) return "B";
+        if (acc >= 70) return "C";
+        return "D";
+    }
 }
+
