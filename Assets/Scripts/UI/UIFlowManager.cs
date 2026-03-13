@@ -1,61 +1,60 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
-public class UIFlowManager : MonoBehaviour
-{
-    [Header("Panels")]
+public class UIFlowManager : MonoBehaviour {
     public GameObject startPanel;
     public GameObject songSelectPanel;
 
-    [Header("Trigger Actions")]
     public InputActionReference leftTrigger;
     public InputActionReference rightTrigger;
 
-    private bool hasStarted = false;
+    bool hasStarted = false;
 
-    void Awake()
-    {
-        // บังคับสถานะเริ่มต้นให้ถูกต้องเสมอ
-        startPanel.SetActive(true);
-        songSelectPanel.SetActive(false);
+    void Awake() {
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void OnEnable() {
+        leftTrigger.action.Enable();
+        rightTrigger.action.Enable();
+
+        leftTrigger.action.performed += OnTriggerPressed;
+        rightTrigger.action.performed += OnTriggerPressed;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable() {
+        leftTrigger.action.performed -= OnTriggerPressed;
+        rightTrigger.action.performed -= OnTriggerPressed;
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        startPanel = GameObject.Find("StartPanel");
+        songSelectPanel = GameObject.Find("SongSelectPanel");
+
+        if (startPanel != null)
+            startPanel.SetActive(true);
+
+        if (songSelectPanel != null)
+            songSelectPanel.SetActive(false);
+
         hasStarted = false;
     }
 
-    void OnEnable()
-    {
-        if (leftTrigger != null)
-            leftTrigger.action.Enable();
-
-        if (rightTrigger != null)
-            rightTrigger.action.Enable();
-    }
-
-    void OnDisable()
-    {
-        if (leftTrigger != null)
-            leftTrigger.action.Disable();
-
-        if (rightTrigger != null)
-            rightTrigger.action.Disable();
-    }
-
-    void Update()
-    {
+    void OnTriggerPressed(InputAction.CallbackContext ctx) {
         if (hasStarted) return;
 
-        bool leftPressed = leftTrigger != null && leftTrigger.action.triggered;
-        bool rightPressed = rightTrigger != null && rightTrigger.action.triggered;
-
-        if (leftPressed || rightPressed)
-        {
-            StartGame();
-        }
+        StartGame();
     }
 
-    void StartGame()
-    {
+    void StartGame() {
         startPanel.SetActive(false);
         songSelectPanel.SetActive(true);
+
         hasStarted = true;
     }
 }
