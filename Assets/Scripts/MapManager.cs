@@ -113,6 +113,8 @@ public class MapManager : MonoBehaviour {
     void Start() {
         string mapDirName = gameState.mapDirName;
 
+        Debug.Log($"MAP DEBUG → Folder: {gameState.mapDirName} | Difficulty: {gameState.difficulty}");
+
         if (mapDirName.Length == 0) {
             Debug.LogError("Game scene manager: Error: Map not set");
             throw new System.Exception("Map not set");
