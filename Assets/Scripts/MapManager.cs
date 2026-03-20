@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 using SimpleJSON;
 
+using TMPro;
+
 
 [RequireComponent(typeof(AudioSource))]
 public class MapManager : MonoBehaviour {
@@ -14,6 +16,7 @@ public class MapManager : MonoBehaviour {
     [SerializeField] private GameState gameState;
     [SerializeField] private GameObject notePrefab;
     [SerializeField] private GameObject levelClearedHud;
+    [SerializeField] private GameObject endGamePanel;
     [SerializeField] private Material planeArrowMaterial;
     [SerializeField] private Material planeDotMaterial;
     [SerializeField] private Material outerBodyLeftMaterial;
@@ -28,6 +31,12 @@ public class MapManager : MonoBehaviour {
     [SerializeField] private float noteYOffset = 0.6f;
     [SerializeField] private float noteZOffset = 0.65f;
     [SerializeField] private float halfJumpSpeedFactor = 3f;
+
+    [SerializeField] private TMP_Text finalScoreText;
+    [SerializeField] private TMP_Text finalAccuracyText;
+    [SerializeField] private TMP_Text finalComboText;
+    [SerializeField] private TMP_Text finalRankText;
+
 
     private int bpm;
     private int noteJumpSpeed;
@@ -376,9 +385,14 @@ public class MapManager : MonoBehaviour {
 
             Debug.Log($"timesamples: {audioSource.timeSamples}");
 
-            if (audioSource.timeSamples != 0) {
-                //  level cleared
-                levelClearedHud.SetActive(true);
+            if (!audioSource.isPlaying && audioSource.timeSamples > 0) {
+
+                endGamePanel.SetActive(true);
+
+                finalScoreText.text = "Score : " + scoreManager.GetScore().ToString();
+                finalAccuracyText.text = "Accuracy : " + scoreManager.GetAccuracy().ToString("F2") + "%";
+                finalComboText.text = "Max Combo : " + scoreManager.GetMaxCombo().ToString();
+                finalRankText.text = "Rank : " + scoreManager.GetRank();
             }
         }
     }
