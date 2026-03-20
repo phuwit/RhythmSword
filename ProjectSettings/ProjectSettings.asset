@@ -144,7 +144,13 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 0.1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - {fileID: 11400000, guid: 895b6041ff74e13429244dd7f2fd7667, type: 2}
+  - {fileID: 11400000, guid: c619cc443ed90ed40ad4910331c3633d, type: 2}
+  - {fileID: 7187033330623652504, guid: 86ba981e77622634080bba9aadf688fe, type: 2}
+  - {fileID: 11400000, guid: 2e74534f9d7527d42b3695a548b21e2d, type: 2}
+  - {fileID: 7205450374028825391, guid: 5649a1ae7f071004aa9306cb74cab6c3, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -524,7 +530,10 @@ PlayerSettings:
       m_Height: 720
       m_Kind: 1
       m_SubKind: 
-  m_BuildTargetBatching: []
+  m_BuildTargetBatching:
+  - m_BuildTarget: Android
+    m_StaticBatching: 1
+    m_DynamicBatching: 0
   m_BuildTargetShaderSettings: []
   m_BuildTargetGraphicsJobs:
   - m_BuildTarget: AndroidPlayer

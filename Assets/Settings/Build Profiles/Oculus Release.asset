@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7040038657725020691
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 15010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: Quality Settings
+  m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.Build.Profile.BuildProfileQualitySettings
+  m_DefaultQualityLevel: Meta Quest (Build Profile)
+  m_QualityLevels:
+  - Mobile
+  - Meta Quest (Build Profile)
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17,7 +33,7 @@ MonoBehaviour:
   m_Subtarget: 0
   m_PlatformId: 80657fe557de4d17822398b3a01b8c9e
   m_PlatformBuildProfile:
-    rid: 1393240896491487232
+    rid: 1393241126030540876
   m_OverrideGlobalSceneList: 0
   m_Scenes: []
   m_HasScriptingDefines: 0
@@ -42,7 +58,7 @@ MonoBehaviour:
     - line: '|   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b:
         0.1254902, a: 1}'
     - line: '|   m_ShowUnitySplashScreen: 0'
-    - line: '|   m_ShowUnitySplashLogo: 0'
+    - line: '|   m_ShowUnitySplashLogo: 1'
     - line: '|   m_SplashScreenOverlayOpacity: 1'
     - line: '|   m_SplashScreenAnimation: 1'
     - line: '|   m_SplashScreenLogoStyle: 1'
@@ -205,7 +221,7 @@ MonoBehaviour:
     - line: '|   overrideDefaultApplicationIdentifier: 1'
     - line: '|   AndroidBundleVersionCode: 1'
     - line: '|   AndroidMinSdkVersion: 32'
-    - line: '|   AndroidTargetSdkVersion: 34'
+    - line: '|   AndroidTargetSdkVersion: 32'
     - line: '|   AndroidPreferredInstallLocation: 0'
     - line: '|   AndroidPreferredDataLocation: 1'
     - line: '|   aotOptions: '
@@ -287,7 +303,7 @@ MonoBehaviour:
     - line: '|   clonedFromGUID: 3c72c65a16f0acb438eed22b8b16c24a'
     - line: '|   templatePackageId: com.unity.template.urp-blank@17.0.14'
     - line: '|   templateDefaultScene: Assets/Scenes/SampleScene.unity'
-    - line: '|   useCustomMainManifest: 1'
+    - line: '|   useCustomMainManifest: 0'
     - line: '|   useCustomLauncherManifest: 0'
     - line: '|   useCustomMainGradleTemplate: 0'
     - line: '|   useCustomLauncherGradleManifest: 0'
@@ -434,66 +450,6 @@ MonoBehaviour:
     - line: '|   - m_BuildTarget: Android'
     - line: '|     m_Icons:'
     - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 192'
-    - line: '|       m_Height: 192'
-    - line: '|       m_Kind: 1'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 144'
-    - line: '|       m_Height: 144'
-    - line: '|       m_Kind: 1'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 96'
-    - line: '|       m_Height: 96'
-    - line: '|       m_Kind: 1'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 72'
-    - line: '|       m_Height: 72'
-    - line: '|       m_Kind: 1'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 48'
-    - line: '|       m_Height: 48'
-    - line: '|       m_Kind: 1'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 36'
-    - line: '|       m_Height: 36'
-    - line: '|       m_Kind: 1'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 192'
-    - line: '|       m_Height: 192'
-    - line: '|       m_Kind: 0'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 144'
-    - line: '|       m_Height: 144'
-    - line: '|       m_Kind: 0'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 96'
-    - line: '|       m_Height: 96'
-    - line: '|       m_Kind: 0'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 72'
-    - line: '|       m_Height: 72'
-    - line: '|       m_Kind: 0'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 48'
-    - line: '|       m_Height: 48'
-    - line: '|       m_Kind: 0'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
-    - line: '|       m_Width: 36'
-    - line: '|       m_Height: 36'
-    - line: '|       m_Kind: 0'
-    - line: '|       m_SubKind: '
-    - line: '|     - m_Textures: []'
     - line: '|       m_Width: 432'
     - line: '|       m_Height: 432'
     - line: '|       m_Kind: 2'
@@ -522,6 +478,66 @@ MonoBehaviour:
     - line: '|       m_Width: 81'
     - line: '|       m_Height: 81'
     - line: '|       m_Kind: 2'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 192'
+    - line: '|       m_Height: 192'
+    - line: '|       m_Kind: 1'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 144'
+    - line: '|       m_Height: 144'
+    - line: '|       m_Kind: 1'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 96'
+    - line: '|       m_Height: 96'
+    - line: '|       m_Kind: 1'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 72'
+    - line: '|       m_Height: 72'
+    - line: '|       m_Kind: 1'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 48'
+    - line: '|       m_Height: 48'
+    - line: '|       m_Kind: 1'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 36'
+    - line: '|       m_Height: 36'
+    - line: '|       m_Kind: 1'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 192'
+    - line: '|       m_Height: 192'
+    - line: '|       m_Kind: 0'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 144'
+    - line: '|       m_Height: 144'
+    - line: '|       m_Kind: 0'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 96'
+    - line: '|       m_Height: 96'
+    - line: '|       m_Kind: 0'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 72'
+    - line: '|       m_Height: 72'
+    - line: '|       m_Kind: 0'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 48'
+    - line: '|       m_Height: 48'
+    - line: '|       m_Kind: 0'
+    - line: '|       m_SubKind: '
+    - line: '|     - m_Textures: []'
+    - line: '|       m_Width: 36'
+    - line: '|       m_Height: 36'
+    - line: '|       m_Kind: 0'
     - line: '|       m_SubKind: '
     - line: '|   - m_BuildTarget: tvOS'
     - line: '|     m_Icons:'
@@ -872,7 +888,7 @@ MonoBehaviour:
     - line: '|   webWasm2023: 0'
     - line: '|   webEnableSubmoduleStrippingCompatibility: 0'
     - line: '|   scriptingDefineSymbols:'
-    - line: '|     Android: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;OVR_DISABLE_HAND_PINCH_BUTTON_MAPPING'
+    - line: '|     Android: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;OVR_DISABLE_HAND_PINCH_BUTTON_MAPPING;DISABLE_LOG'
     - line: '|     Standalone: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;OVR_DISABLE_HAND_PINCH_BUTTON_MAPPING'
     - line: '|     Windows Store Apps: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS'
     - line: '|   additionalCompilerArguments: {}'
@@ -995,12 +1011,12 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1393240896491487232
+    - rid: 1393241126030540876
       type: {class: AndroidPlatformBuildSettings, ns: UnityEditor.Android, asm: UnityEditor.Android.Extensions}
       data:
         m_Development: 0
-        m_ConnectProfiler: 1
-        m_BuildWithDeepProfilingSupport: 1
+        m_ConnectProfiler: 0
+        m_BuildWithDeepProfilingSupport: 0
         m_AllowDebugging: 0
         m_WaitForManagedDebugger: 0
         m_ManagedDebuggerFixedPort: 0
@@ -1023,19 +1039,3 @@ MonoBehaviour:
         m_BuildAppBundle: 0
         m_IPAddressToConnect: 
         m_SymlinkSources: 0
---- !u!114 &4237091443447848504
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 15010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Quality Settings
-  m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.Build.Profile.BuildProfileQualitySettings
-  m_DefaultQualityLevel: Meta Quest (Build Profile)
-  m_QualityLevels:
-  - Mobile
-  - Meta Quest (Build Profile)
