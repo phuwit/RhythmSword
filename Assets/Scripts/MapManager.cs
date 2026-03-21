@@ -13,6 +13,7 @@ public class MapManager : MonoBehaviour {
     private AudioSource audioSource;
 
     [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private UiInteractionsManager uiInteractionsManager;
     [SerializeField] private GameState gameState;
     [SerializeField] private GameObject notePrefab;
     [SerializeField] private GameObject levelClearedHud;
@@ -386,8 +387,9 @@ public class MapManager : MonoBehaviour {
             Debug.Log($"timesamples: {audioSource.timeSamples}");
 
             if (!audioSource.isPlaying && audioSource.timeSamples > 0) {
-
+                // level completed
                 endGamePanel.SetActive(true);
+                uiInteractionsManager.SetUiInteraction(true);
 
                 finalScoreText.text = "Score : " + scoreManager.GetScore().ToString();
                 finalAccuracyText.text = "Accuracy : " + scoreManager.GetAccuracy().ToString("F2") + "%";
