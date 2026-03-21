@@ -44,6 +44,10 @@ public class SongManager : MonoBehaviour
     IEnumerator LoadSongs()
     {
         string songsPath = Path.Combine(Application.streamingAssetsPath, "Songs");
+        if (Application.streamingAssetsPath.StartsWith("jar") || Application.streamingAssetsPath.StartsWith("http"))
+        {
+            songsPath = Path.Combine(Application.persistentDataPath, "Songs");
+        }
 
         if (!Directory.Exists(songsPath))
         {
@@ -57,16 +61,8 @@ public class SongManager : MonoBehaviour
         {
             string infoPath = Path.Combine(dir, "Info.dat");
 
-            UnityWebRequest www = UnityWebRequest.Get(infoPath);
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Failed to load Info.dat: " + infoPath);
-                continue;
-            }
-
-            SongInfo song = JsonUtility.FromJson<SongInfo>(www.downloadHandler.text);
+            string json = File.ReadAllText(infoPath);
+            SongInfo song = JsonUtility.FromJson<SongInfo>(json);
 
             // 🔥 สร้าง SongItem
             GameObject item = Instantiate(songItemPrefab);
@@ -111,29 +107,25 @@ public class SongManager : MonoBehaviour
 
             if (File.Exists(coverPath))
             {
-                UnityWebRequest textureRequest = UnityWebRequestTexture.GetTexture(coverPath);
-                yield return textureRequest.SendWebRequest();
+                byte[] imageBytes = File.ReadAllBytes(coverPath);
 
-                if (textureRequest.result == UnityWebRequest.Result.Success)
+                Texture2D tex = new Texture2D(2, 2);
+                tex.LoadImage(imageBytes); 
+
+                Sprite sprite = Sprite.Create(
+                    tex,
+                    new Rect(0, 0, tex.width, tex.height),
+                    new Vector2(0.5f, 0.5f)
+                );
+
+                Image[] images = item.GetComponentsInChildren<Image>();
+
+                foreach (Image img in images)
                 {
-                    Texture2D tex = DownloadHandlerTexture.GetContent(textureRequest);
-
-                    Sprite sprite = Sprite.Create(
-                        tex,
-                        new Rect(0, 0, tex.width, tex.height),
-                        new Vector2(0.5f, 0.5f)
-                    );
-
-                    // หา Image component ที่เป็น cover
-                    Image[] images = item.GetComponentsInChildren<Image>();
-
-                    foreach (Image img in images)
+                    if (img.gameObject.name.Contains("Cover"))
                     {
-                        if (img.gameObject.name.Contains("Cover"))
-                        {
-                            img.sprite = sprite;
-                            break;
-                        }
+                        img.sprite = sprite;
+                        break;
                     }
                 }
             }
