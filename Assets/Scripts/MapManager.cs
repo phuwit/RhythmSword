@@ -2,21 +2,23 @@ using UnityEngine;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 using SimpleJSON;
 
 using TMPro;
+using System.Data.SqlTypes;
+using UnityEngine.Networking;
 
 
 [RequireComponent(typeof(AudioSource))]
 public class MapManager : MonoBehaviour {
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private UiInteractionsManager uiInteractionsManager;
     [SerializeField] private GameState gameState;
     [SerializeField] private GameObject notePrefab;
-    [SerializeField] private GameObject levelClearedHud;
     [SerializeField] private GameObject endGamePanel;
     [SerializeField] private Material planeArrowMaterial;
     [SerializeField] private Material planeDotMaterial;
@@ -45,6 +47,7 @@ public class MapManager : MonoBehaviour {
     private float noteHalfJumpDuration;
     private float noteJumpDistance;
     private float initialSpawnDistance;
+    private string songRootPath;
 
     private readonly List<Note> notes = new();
     private int currentNoteIndex = 0;
@@ -122,6 +125,7 @@ public class MapManager : MonoBehaviour {
 
     void Start() {
         string mapDirName = gameState.mapDirName;
+        songRootPath = Path.Join(Application.persistentDataPath, "Songs");
 
         Debug.Log($"MAP DEBUG → Folder: {gameState.mapDirName} | Difficulty: {gameState.difficulty}");
 
@@ -134,14 +138,14 @@ public class MapManager : MonoBehaviour {
             throw new System.Exception("Difficulty not set");
         }
 
-        string mapInfoPath = "Maps/" + mapDirName + "/info";
-        TextAsset mapInfoFile = Resources.Load<TextAsset>(mapInfoPath);
-        if (mapInfoFile == null) {
+        string mapInfoPath = Path.Join(songRootPath, Path.Join(mapDirName, "info.dat"));
+        if (!File.Exists(mapInfoPath)) {
             Debug.LogError($"Game scene manager: Error: Map file not found ({mapInfoPath})");
             throw new System.Exception("Map file not found");
         }
+        string mapInfoText = File.ReadAllText(mapInfoPath);
 
-        JSONNode mapInfo = JSON.Parse(mapInfoFile.text);
+        JSONNode mapInfo = JSON.Parse(mapInfoText);
 
         if (!mapInfo.HasKey("_version")) {
             Debug.LogError("Game scene manager: Error: Map info format is unsuppored (only version 2.x is suppored)");
@@ -165,7 +169,6 @@ public class MapManager : MonoBehaviour {
             foreach (JSONNode difficulty in difficultySet["_difficultyBeatmaps"].AsArray) {
                 if (difficulty["_difficulty"] == gameState.difficulty) {
                     mapNotesFileName = difficulty["_beatmapFilename"];
-                    mapNotesFileName = RemoveExtension(mapNotesFileName);
 
                     noteJumpSpeed = difficulty["_noteJumpMovementSpeed"].AsInt;
                     noteJumpStartBeatOffset = difficulty["_noteJumpStartBeatOffset"].AsFloat;
@@ -180,14 +183,14 @@ public class MapManager : MonoBehaviour {
             throw new System.Exception("Difficulty is invalid");
         }
 
-        string mapNotesPath = "Maps/" + mapDirName + "/" + mapNotesFileName;
-        TextAsset mapNotesFile = Resources.Load<TextAsset>(mapNotesPath);
-        if (mapNotesFile == null) {
+        string mapNotesPath = Path.Join(songRootPath, Path.Join(mapDirName, mapNotesFileName));
+        if (!File.Exists(mapNotesPath)) {
             Debug.LogError($"Game scene manager: Error: Notes file not found ({mapNotesPath})");
             throw new System.Exception("Notes file not found");
         }
+        string mapNotesText = File.ReadAllText(mapNotesPath);
 
-        JSONNode mapNotes = JSON.Parse(mapNotesFile.text);
+        JSONNode mapNotes = JSON.Parse(mapNotesText);
 
         string mapNotesVersion = "0.0.0";
         if (mapNotes.HasKey("version")) {
@@ -242,26 +245,55 @@ public class MapManager : MonoBehaviour {
         for (int i = 0; i < initialPoolSize; i++) {
             CreateNoteInstance();
         }
-
-        string songPath = "Maps/" + mapDirName + "/" + RemoveExtension(mapInfo["_songFilename"]);
-        AudioClip songClip = Resources.Load<AudioClip>(songPath);
-
-        if (songClip == null) {
+        
+        string songPath = Path.Join(songRootPath, Path.Join(mapDirName, (string)mapInfo["_songFilename"]));
+        if (!File.Exists(songPath)) {
             Debug.LogError($"Game scene manager: Error: Song file not found ({songPath})");
             throw new System.Exception("Song file not found");
         }
 
-        audioSource = GetComponent<AudioSource>();
-        audioSource.clip = songClip;
-
         scoreManager.Init(notes.Count, bpm);
 
-        StartCoroutine(StartSong());
+        StartCoroutine(StartSong(songPath));
     }
 
-    private IEnumerator StartSong() {
+    private IEnumerator StartSong(string filePath) {
         yield return new WaitForSeconds(1f);
-        audioSource.Play();
+        // UnityWebRequest requires a URI scheme. Local files need the "file://" prefix.
+        string uriPath = filePath;
+        
+        // Ensure the path is properly formatted for cross-platform WebRequests
+        if (!uriPath.StartsWith("file://") && !uriPath.StartsWith("http"))
+        {
+            // On Windows, paths might look like "C:\...", so we format it safely.
+            // On Android, paths start with "/", so adding "file://" makes it "file:///"
+            uriPath = "file://" + uriPath;
+        }
+        // Request the file as an OGG Vorbis audio clip
+        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(uriPath, AudioType.OGGVORBIS))
+        {
+            // Wait for the download to complete
+            yield return uwr.SendWebRequest();
+
+            if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error loading OGG file: {uwr.error}\nAttempted Path: {uriPath}");
+            }
+            else
+            {
+                // Extract the audio clip from the request
+                AudioClip loadedClip = DownloadHandlerAudioClip.GetContent(uwr);
+                
+                // Optional: Give the clip a name for easier debugging in the editor
+                loadedClip.name = Path.GetFileName(filePath);
+
+                // Assign and play
+                audioSource.clip = loadedClip;
+                audioSource.Play();
+                
+                Debug.Log($"Successfully loaded and playing: {loadedClip.name}");
+            }
+        }
     }
 
     private NoteInstance GetNoteInstance() {
@@ -386,7 +418,7 @@ public class MapManager : MonoBehaviour {
 
             Debug.Log($"timesamples: {audioSource.timeSamples}");
 
-            if (!audioSource.isPlaying && audioSource.timeSamples > 0) {
+            if (activeNoteInstances.Count <= 0 && currentNoteIndex != 0) {
                 // level completed
                 endGamePanel.SetActive(true);
                 uiInteractionsManager.SetUiInteraction(true);

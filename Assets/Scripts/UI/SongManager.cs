@@ -32,6 +32,7 @@ public class SongInfo
 
 public class SongManager : MonoBehaviour
 {
+    [SerializeField] private Image bigCoverImage;
     public Transform songListParent;   // ต้องเป็น Content
     public GameObject songItemPrefab;
 
@@ -43,11 +44,7 @@ public class SongManager : MonoBehaviour
 
     IEnumerator LoadSongs()
     {
-        string songsPath = Path.Combine(Application.streamingAssetsPath, "Songs");
-        if (Application.streamingAssetsPath.StartsWith("jar") || Application.streamingAssetsPath.StartsWith("http"))
-        {
-            songsPath = Path.Combine(Application.persistentDataPath, "Songs");
-        }
+        string songsPath = Path.Combine(Application.persistentDataPath, "Songs");
 
         if (!Directory.Exists(songsPath))
         {
@@ -67,21 +64,6 @@ public class SongManager : MonoBehaviour
             // 🔥 สร้าง SongItem
             GameObject item = Instantiate(songItemPrefab);
             item.transform.SetParent(songListParent, false);
-
-            // ========================
-            // 🎯 ผูก SongItemUI ให้กดแล้วแสดง difficulty
-            // ========================
-            SongItemUI ui = item.GetComponent<SongItemUI>();
-
-            if (ui != null)
-            {
-                ui.Setup(song, dir);
-            }
-            else
-            {
-                Debug.LogError("SongItemUI not found on prefab!");
-            }
-
 
             // ========================
             // 🎵 ตั้งค่า Text
@@ -128,6 +110,17 @@ public class SongManager : MonoBehaviour
                         break;
                     }
                 }
+            }
+
+            SongItemUI ui = item.GetComponent<SongItemUI>();
+
+            if (ui != null)
+            {
+                ui.Setup(song, dir, bigCoverImage);
+            }
+            else
+            {
+                Debug.LogError("SongItemUI not found on prefab!");
             }
         }
     }

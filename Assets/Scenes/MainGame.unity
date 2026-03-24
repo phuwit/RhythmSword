@@ -733,6 +733,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[BuildingBlock] OVRInteractionComprehensive'
       objectReference: {fileID: 0}
+    - target: {fileID: 4148778239110795873, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4397664628265918113, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4597,12 +4601,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d0ee1f4dd77fd4aa1300db7c480b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoteSpawner
+  audioSource: {fileID: 475015587}
   scoreManager: {fileID: 1855349868}
-  uiInteractionsManager: {fileID: 0}
+  uiInteractionsManager: {fileID: 2042026766}
   gameState: {fileID: 11400000, guid: 172fd4bb8a175b94e914ee18d00de6b8, type: 2}
   notePrefab: {fileID: 5727433399853729400, guid: 38610cbc5f22d8849adb7f550fa8330c, type: 3}
-  levelClearedHud: {fileID: 0}
-  endGamePanel: {fileID: 790554234}
+  endGamePanel: {fileID: 1184280462}
   planeArrowMaterial: {fileID: 2100000, guid: 3447a420d6934fd488d83a74a4f6de5b, type: 2}
   planeDotMaterial: {fileID: 2100000, guid: 8d8cd28cbfaf6f64f947a4e81b80442f, type: 2}
   outerBodyLeftMaterial: {fileID: 2100000, guid: e4732833b524e9643b5ee803d01b4c30, type: 2}
@@ -7277,8 +7281,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881829626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 160.25804}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 7.88}
+  m_LocalScale: {x: 0.0903375, y: 0.0903375, z: 0.0903375}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1504102912}
@@ -7287,7 +7291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.78202, y: -0.99221}
+  m_AnchoredPosition: {x: -0.32, y: -0.11}
   m_SizeDelta: {x: 48, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &881829630
@@ -9459,6 +9463,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1122065493}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1184280462 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2121831639775495873, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
+  m_PrefabInstance: {fileID: 996657844}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1203232778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16179,7 +16188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   uiInteraction: 0
-  uiInteractor: {fileID: 0}
+  uiInteractor: {fileID: 60877504}
   activeWhenUiOff: []
 --- !u!4 &2042026767
 Transform:

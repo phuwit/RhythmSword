@@ -63,6 +63,7 @@ public class DifficultyManager : MonoBehaviour {
         List<DifficultyButtonUI> tempButtons = new List<DifficultyButtonUI>();
 
         foreach (var set in song._difficultyBeatmapSets) {
+            if (set._beatmapCharacteristicName != "Standard") continue;
             foreach (var diff in set._difficultyBeatmaps) {
                 GameObject btnObj = Instantiate(difficultyButtonPrefab, difficultyButtonParent);
 
