@@ -10,7 +10,6 @@ Library: C:\Users\phuwit\ProgrammingWindows\RhythmSword\Temp\BurstOutput\tempbur
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Users\phuwit\ProgrammingWindows\RhythmSword\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.6f1/Editor/Data/PlaybackEngines/AndroidPlayer
 --decode-folder=C:\Users\phuwit\ProgrammingWindows\RhythmSword\Library\Burst
 --output=C:\Users\phuwit\ProgrammingWindows\RhythmSword\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
@@ -129,7 +128,6 @@ Library: C:\Users\phuwit\ProgrammingWindows\RhythmSword\Temp\BurstOutput\tempbur
 --float-mode=Fast
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Users\phuwit\ProgrammingWindows\RhythmSword\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.6f1/Editor/Data/PlaybackEngines/AndroidPlayer
 --decode-folder=C:\Users\phuwit\ProgrammingWindows\RhythmSword\Library\Burst
 --output=C:\Users\phuwit\ProgrammingWindows\RhythmSword\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
@@ -148,7 +146,6 @@ Library: C:\Users\phuwit\ProgrammingWindows\RhythmSword\Temp\BurstOutput\tempbur
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Users\phuwit\ProgrammingWindows\RhythmSword\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.6f1/Editor/Data/PlaybackEngines/AndroidPlayer
 --decode-folder=C:\Users\phuwit\ProgrammingWindows\RhythmSword\Library\Burst
 --output=C:\Users\phuwit\ProgrammingWindows\RhythmSword\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
